@@ -29,11 +29,16 @@ export function ProductCard({
       {/* Product Content */}
       <div className="flex flex-1 flex-col p-4">
         <div className="mb-2 flex items-start justify-between gap-2">
-          <Link href={`/products/${id}`} className="group-hover:underline">
+          <a 
+            href={url || `#`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="group-hover:underline"
+          >
             <h3 className="font-semibold text-xl text-card-foreground line-clamp-1">
               {title}
             </h3>
-          </Link>
+          </a>
           
           {url && (
             <a 
@@ -48,13 +53,20 @@ export function ProductCard({
           )}
         </div>
 
-        <p className="mb-4 text-muted-foreground line-clamp-2">
-          {shortDescription}
-        </p>
+        <a 
+          href={url || `#`} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="no-underline hover:underline"
+        >
+          <p className="mb-4 text-muted-foreground line-clamp-2">
+            {shortDescription}
+          </p>
+        </a>
 
         {/* Tags */}
         <div className="mt-auto flex flex-wrap gap-1.5">
-          {tags.slice(0, 3).map((tag) => (
+          {tags.slice(0, 10).map((tag) => (
             <span
               key={tag}
               className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground"
@@ -62,23 +74,16 @@ export function ProductCard({
               {tag}
             </span>
           ))}
-          {tags.length > 3 && (
+          {tags.length > 10 && (
             <span className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">
-              +{tags.length - 3}
+              +{tags.length - 10}
             </span>
           )}
         </div>
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t bg-card/50 px-4 py-2">
-        <Link
-          href={`/products/${id}`}
-          className="text-sm text-muted-foreground hover:text-card-foreground"
-        >
-          View details
-        </Link>
-        
+      <div className="flex items-right justify-end border-t bg-card/50 px-4 py-2">
         <UpvoteButton
           id={id}
           upvotes={upvotes}
