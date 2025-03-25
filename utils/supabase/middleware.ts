@@ -44,9 +44,8 @@ export const updateSession = async (request: NextRequest) => {
       return NextResponse.redirect(new URL("/sign-in", request.url));
     }
 
-    if (request.nextUrl.pathname === "/" && !user.error) {
-      return NextResponse.redirect(new URL("/protected", request.url));
-    }
+    // Removed the automatic redirect from home to protected page
+    // to allow users to navigate freely
 
     return response;
   } catch (e) {
