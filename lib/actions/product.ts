@@ -28,19 +28,14 @@ export const addProductAction = async (productData: AddProductData) => {
     let productInfo = null;
     
     try {
-      // Call the API route directly to avoid exposing API key in client-side code
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/perplexity/resource-info`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: productData.url })
-      });
+      // Call the fetchProductInfoFromAPI function directly since we're already on the server
+      // This avoids making an HTTP request and directly uses the function
+      productInfo = await fetchProductInfoFromAPI(productData.url);
       
-      if (response.ok) {
-        const data = await response.json();
-        productInfo = data.productInfo;
+      if (productInfo) {
         console.log("Product info fetched successfully:", productInfo);
       } else {
-        console.error("Error fetching product info:", await response.text());
+        console.error("Failed to fetch product info");
       }
     } catch (apiError) {
       console.error("Error calling product info API:", apiError);
